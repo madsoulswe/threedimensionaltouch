@@ -13,22 +13,17 @@ $.event.special.threedimensionaltouch = {
           timerEnded = false,
           timeOut;
         	
-      function triggerEnd(endEvent) {
+      function triggerClear() {
         clearTimeout(timeOut);
-        
-        $self.off('touchend mouseup', triggerEnd);
-        
-        if (timerEnded && target === endEvent.target) {
-          $.event.simulate('threedimensionaltouch', self, endEvent);
-        }
+        $(document).off('touchend mouseup', triggerClear);
       }
-      
+            
       timeOut = setTimeout(function(endEvent) {
-        timerEnded = true;
-        $self.trigger('touchend');
+        triggerClear();
+        $.event.simulate('threedimensionaltouch', self, endEvent);
       }, 1000);
-      
-      $self.on('touchend mouseup', triggerEnd);
+            
+      $(document).on('touchend mouseup', triggerClear);
     });
   }
 };
