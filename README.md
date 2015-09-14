@@ -9,18 +9,16 @@ $.event.special.threedimensionaltouch = {
       $self = $(self);
         
     $self.on('touchstart mousedown', function(startEvent) {
-      var target = startEvent.target,
-          timerEnded = false,
-          timeOut;
+      var timeOut;
         	
       function triggerClear() {
         clearTimeout(timeOut);
         $(document).off('touchend mouseup', triggerClear);
       }
             
-      timeOut = setTimeout(function(endEvent) {
+      timeOut = setTimeout(function() {
         triggerClear();
-        $.event.simulate('threedimensionaltouch', self, endEvent);
+        $.event.simulate('threedimensionaltouch', self);
       }, 1000);
             
       $(document).on('touchend mouseup', triggerClear);
